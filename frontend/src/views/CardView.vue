@@ -7,6 +7,7 @@ import { useLearning } from '../stores/learning'
 import AsyncState from '../components/AsyncState.vue'
 import Icon from '../components/Icon.vue'
 import AiTutor from '../components/AiTutor.vue'
+import RelatedVideos from '../components/RelatedVideos.vue'
 const route = useRoute()
 const learning = useLearning()
 const id = computed(() => Number(route.params.id))
@@ -21,6 +22,15 @@ const {
 } = useResource(
   () => api.card(id.value),
   () => id.value,
+)
+const {
+  data: videos,
+  error: videoError,
+  reload: reloadVideos,
+} = useResource(
+  () =>
+    card.value && unlocked.value ? api.pointResources(card.value.knowledgeId) : Promise.resolve([]),
+  () => `${card.value?.knowledgeId}:${Boolean(unlocked.value)}`,
 )
 watch(id, () => {
   flipped.value = false
@@ -102,6 +112,12 @@ function review() {
           }}
         </p>
         <AiTutor :knowledge-id="card.knowledgeId" :name="card.name" />
+        <RelatedVideos :resources="videos || []" />
+        <p v-if="videoError" class="hint" role="status">
+          相关视频暂时无法加载。<button class="text-button" @click="reloadVideos">
+            重新加载视频
+          </button>
+        </p>
         <div class="section-heading"><h2>回到故事里</h2></div>
         <RouterLink
           v-for="story in card.stories"

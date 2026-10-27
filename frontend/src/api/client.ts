@@ -1,11 +1,13 @@
 import axios from 'axios'
-import type { Subject, Chapter, Knowledge, Story, Answer, Card } from './types'
+import type { Subject, Chapter, Knowledge, Story, Answer, Card, LearningResource } from './types'
 
 const http = axios.create({ baseURL: '/api', timeout: 12000 })
 async function get<T>(url: string): Promise<T> {
   return (await http.get<{ data: T }>(url)).data.data
 }
 export const api = {
+  subjectResources: (id: number) => get<LearningResource[]>(`/subjects/${id}/resources`),
+  pointResources: (id: number) => get<LearningResource[]>(`/knowledge-points/${id}/resources`),
   subjects: () => get<Subject[]>('/subjects'),
   chapters: (id: number) => get<Chapter[]>(`/subjects/${id}/chapters`),
   points: (id: number) => get<Knowledge[]>(`/chapters/${id}/knowledge-points`),

@@ -18,6 +18,8 @@ HTTP 200 成功；400 参数或题目/选项关系不合法；404 内容不存�
 | GET | /api/stories/{id} | 当前场景和安全题目投影 |
 | POST | /api/stories/{id}/answer | 服务端判分与全部解析 |
 | GET | /api/knowledge-cards/{id} | 知识卡与关联故事 |
+| GET | /api/subjects/{id}/resources | 科目相关的外部视频与知识点映射 |
+| GET | /api/knowledge-points/{id}/resources | 对应知识点的原作者视频链接 |
 
 ## 答案边界
 

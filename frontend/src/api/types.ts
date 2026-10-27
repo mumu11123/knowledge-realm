@@ -16,6 +16,18 @@ export interface StoryLink {
   id: number
   title: string
 }
+export interface LearningResource {
+  id: number
+  title: string
+  platform: string
+  authorName: string
+  authorUrl: string
+  url: string
+  description: string
+  contentReviewStatus: string
+  linkVerifiedAt: string
+  knowledgeIds: number[]
+}
 export interface Knowledge {
   id: number
   chapterId: number

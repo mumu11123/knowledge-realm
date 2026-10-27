@@ -36,6 +36,8 @@ test('real API learning journey, wrong feedback, all explanations, cards and per
   await page.getByRole('button', { name: '带走这一段知识' }).click()
   await page.getByRole('button', { name: '完成学习，解锁知识卡' }).click()
   await page.getByRole('link', { name: '打开知识卡' }).click()
+  await page.locator('.related-videos > summary').click()
+  await expect(page.locator('.related-videos .video-link')).toHaveCount(4)
   await page.getByRole('button', { name: '翻转查看通俗解释' }).click()
   await expect(page.getByRole('button', { name: '显示专业定义' })).toHaveAttribute(
     'aria-pressed',

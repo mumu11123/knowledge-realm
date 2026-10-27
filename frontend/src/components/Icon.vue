@@ -1,6 +1,7 @@
 <script setup lang="ts">
 withDefaults(defineProps<{ name: string; size?: number }>(), { size: 24 })
 const paths: Record<string, string> = {
+  play: 'M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0 M10 8l6 4-6 4z',
   book: 'M4 4h5a5 5 0 0 1 3 1 5 5 0 0 1 3-1h5v15h-5a5 5 0 0 0-3 1 5 5 0 0 0-3-1H4z M12 5v15',
   map: 'm3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2z M9 3v16 M15 5v16',
   cards: 'M7 3h12v16H7z M4 7v15h11 M10 8h6 M10 12h4',
