@@ -1,0 +1,63 @@
+name: Validate V0.1
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+          cache-dependency-path: backend/pom.xml
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - name: Start isolated MySQL 8.4
+        shell: bash
+        run: |
+          export MYSQL_PASSWORD="$(openssl rand -hex 24)"
+          export MYSQL_ROOT_PASSWORD="$(openssl rand -hex 24)"
+          echo "::add-mask::$MYSQL_PASSWORD"
+          echo "::add-mask::$MYSQL_ROOT_PASSWORD"
+          echo "DB_PASSWORD=$MYSQL_PASSWORD" >> "$GITHUB_ENV"
+          echo "DB_USERNAME=realm" >> "$GITHUB_ENV"
+          echo "DB_PORT=3307" >> "$GITHUB_ENV"
+          docker run -d --name realm-mysql -e MYSQL_PASSWORD -e MYSQL_ROOT_PASSWORD -e MYSQL_DATABASE=knowledge_realm -e MYSQL_USER=realm -p 127.0.0.1:3307:3306 mysql:8.4
+          ready=false
+          for attempt in {1..60}; do
+            if docker exec -e MYSQL_PWD="$MYSQL_ROOT_PASSWORD" realm-mysql mysql -h 127.0.0.1 -u root -e 'SELECT 1' >/dev/null 2>&1; then ready=true; break; fi
+            sleep 2
+          done
+          test "$ready" = true
+          docker exec -e MYSQL_PWD="$MYSQL_ROOT_PASSWORD" realm-mysql mysql -u root -e "CREATE DATABASE knowledge_realm_test CHARACTER SET utf8mb4; GRANT ALL ON knowledge_realm_test.* TO 'realm'@'%';"
+      - name: Backend tests with MySQL
+        run: mvn -B -f backend/pom.xml verify
+        env:
+          RUN_MYSQL_TESTS: 'true'
+      - name: Frontend install, tests, build
+        working-directory: frontend
+        run: |
+          npm ci
+          npm run format:check
+          npm test
+          npm run build
+          npx playwright install --with-deps chromium
+      - name: Start backend
+        run: |
+          java -jar backend/target/realm-0.1.0.jar > /tmp/realm-backend.log 2>&1 &
+          ready=false
+          for attempt in {1..60}; do
+            if curl --fail --silent http://127.0.0.1:8080/api/subjects >/dev/null; then ready=true; break; fi
+            sleep 2
+          done
+          if [ "$ready" != true ]; then cat /tmp/realm-backend.log; exit 1; fi
+      - name: Browser acceptance tests
+        working-directory: frontend
+        run: npm run test:e2e

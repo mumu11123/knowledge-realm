@@ -10,3 +10,8 @@ target/
 *.log
 .DS_Store
 Thumbs.db
+.npm-cache/
+.m2-cache/
+.local/
+playwright-report/
+test-results/
