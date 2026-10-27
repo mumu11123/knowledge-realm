@@ -2,6 +2,10 @@
 
 执行日期：2026-10-27。以下是实际本机结果，不把未执行的 CI 当作通过。
 
+## GitHub Actions 补充验证
+
+[首次完整 CI](https://github.com/mumu11123/knowledge-realm/actions/runs/40454344950) 已实际通过：Linux、Java 21、MySQL 8.4、Node 24、Chromium；包含后端测试、前端格式检查/单测/构建和全部浏览器验收。此结果补充了本机缺少 Java 21 与 Docker 引擎的验证边界。
+
 ## 环境
 
 Windows，Java 24.0.1（编译 release 21）、Maven 3.9.6、Node 24.15.0、npm 11.12.1、MySQL 8.0.30、Microsoft Edge Chromium。
