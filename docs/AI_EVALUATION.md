@@ -2,6 +2,8 @@
 
 日期：2026-10-27。模型测试与协议模拟分开记录，默认自动测试不使用真实 Key、不产生云模型费用。
 
+[GitHub Actions 完整验收](https://github.com/mumu11123/knowledge-realm/actions/runs/40464214476) 已通过 Java 21、MySQL 8.4、Node 24 与 Chromium 的后端、前端和浏览器检查。后续将核心答题与 AI 记录连接改为业务事件后，本机 33 项后端测试也再次全部通过。
+
 ## 已实际执行
 
 | 检查 | 结果 |

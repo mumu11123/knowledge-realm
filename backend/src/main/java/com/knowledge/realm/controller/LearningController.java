@@ -10,19 +10,17 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import com.knowledge.realm.ai.auth.AiAuthService;
-import com.knowledge.realm.ai.learning.AuthorizedLearningService;
-import jakarta.servlet.http.HttpServletRequest;
+import com.knowledge.realm.common.LearningAnswerSubmitted;
+import org.springframework.context.ApplicationEventPublisher;
 
 @RestController
 @RequestMapping("/api")
 @Tag(name = "知境学习", description = "游客演示学习 API；进度保存在浏览器本地")
 public class LearningController {
     private final LearningService learning;
-    private final AiAuthService auth;
-    private final AuthorizedLearningService records;
-    public LearningController(LearningService learning, AiAuthService auth, AuthorizedLearningService records) {
-        this.learning = learning; this.auth=auth; this.records=records;
+    private final ApplicationEventPublisher events;
+    public LearningController(LearningService learning, ApplicationEventPublisher events) {
+        this.learning = learning; this.events=events;
     }
     @GetMapping("/subjects")
     @Operation(summary = "科目目录")
@@ -41,9 +39,9 @@ public class LearningController {
     public ApiResponse<Views.Story> story(@PathVariable @Positive long id) { return ApiResponse.ok(learning.story(id)); }
     @PostMapping("/stories/{id}/answer")
     @Operation(summary = "服务端判分，返回所选剧情反馈、全部选项解析和知识总结")
-    public ApiResponse<Views.Answer> answer(@PathVariable @Positive long id, @Valid @RequestBody AnswerRequest request, HttpServletRequest http) {
+    public ApiResponse<Views.Answer> answer(@PathVariable @Positive long id, @Valid @RequestBody AnswerRequest request) {
         var answer=learning.answer(id,request);
-        auth.current(http).ifPresent(session -> records.record(session.id(),answer));
+        events.publishEvent(new LearningAnswerSubmitted(answer));
         return ApiResponse.ok(answer);
     }
     @GetMapping("/knowledge-cards/{id}")
