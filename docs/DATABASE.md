@@ -2,6 +2,8 @@
 
 MySQL 8 / InnoDB / utf8mb4。Flyway V1 建表、V2 初始化演示数据、V3 明确来源链接；不使用 ORM 自动建表。
 
+V0.2 增量迁移：V4 新增 learner_session（Token 哈希/有效期）、learner_attempt（授权会话真实答题）、ai_knowledge_chunk（独立专业片段与审核记录）、ai_story_draft（结构化草稿与人工发布记录）、ai_call_log（脱敏调用观测）；V5 记录维护者对首批四段专业笔记的明确审批，以原文 SHA-256 限定适用范围。未修改 V1–V3，也不把故事作为检索库。
+
 | 表 | 用途与关系 |
 | --- | --- |
 | subject | 四门科目，OPEN / COMING_SOON |

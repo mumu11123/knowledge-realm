@@ -1,5 +1,7 @@
 # V0.1 验收记录
 
+> V0.2 AI Agent 的最新验收见 [AI_EVALUATION.md](AI_EVALUATION.md)。以下保留 V0.1 的历史结果。
+
 执行日期：2026-10-27。以下是实际本机结果，不把未执行的 CI 当作通过。
 
 ## GitHub Actions 补充验证

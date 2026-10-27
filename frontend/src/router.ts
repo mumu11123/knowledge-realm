@@ -4,6 +4,11 @@ export const router = createRouter({
   history: createWebHistory(),
   scrollBehavior: () => ({ top: 0 }),
   routes: [
+    {
+      path: '/admin/ai',
+      component: () => import('./views/AiAdminView.vue'),
+      meta: { title: 'AI 内容审核' },
+    },
     { path: '/', component: () => import('./views/HomeView.vue'), meta: { title: '发现' } },
     { path: '/map', component: () => import('./views/MapView.vue'), meta: { title: '知识地图' } },
     {

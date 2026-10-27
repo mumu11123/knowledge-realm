@@ -10,13 +10,20 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import com.knowledge.realm.ai.auth.AiAuthService;
+import com.knowledge.realm.ai.learning.AuthorizedLearningService;
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/api")
 @Tag(name = "知境学习", description = "游客演示学习 API；进度保存在浏览器本地")
 public class LearningController {
     private final LearningService learning;
-    public LearningController(LearningService learning) { this.learning = learning; }
+    private final AiAuthService auth;
+    private final AuthorizedLearningService records;
+    public LearningController(LearningService learning, AiAuthService auth, AuthorizedLearningService records) {
+        this.learning = learning; this.auth=auth; this.records=records;
+    }
     @GetMapping("/subjects")
     @Operation(summary = "科目目录")
     public ApiResponse<List<Views.Subject>> subjects() { return ApiResponse.ok(learning.subjects()); }
@@ -34,8 +41,10 @@ public class LearningController {
     public ApiResponse<Views.Story> story(@PathVariable @Positive long id) { return ApiResponse.ok(learning.story(id)); }
     @PostMapping("/stories/{id}/answer")
     @Operation(summary = "服务端判分，返回所选剧情反馈、全部选项解析和知识总结")
-    public ApiResponse<Views.Answer> answer(@PathVariable @Positive long id, @Valid @RequestBody AnswerRequest request) {
-        return ApiResponse.ok(learning.answer(id, request));
+    public ApiResponse<Views.Answer> answer(@PathVariable @Positive long id, @Valid @RequestBody AnswerRequest request, HttpServletRequest http) {
+        var answer=learning.answer(id,request);
+        auth.current(http).ifPresent(session -> records.record(session.id(),answer));
+        return ApiResponse.ok(answer);
     }
     @GetMapping("/knowledge-cards/{id}")
     @Operation(summary = "知识卡与关联故事；游客卡片解锁是本地 UI 状态，并非授权边界")

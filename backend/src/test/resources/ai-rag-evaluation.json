@@ -1,0 +1,12 @@
+[
+  {"id":"list-random-access","knowledgeId":201,"query":"为什么单链表不能像顺序表一样随机访问","expectedSources":["K1"],"refuse":false},
+  {"id":"list-insert-condition","knowledgeId":201,"query":"单链表插入 O(1) 的前驱条件是什么","expectedSources":["K2"],"refuse":false},
+  {"id":"list-search-cost","knowledgeId":201,"query":"查找前驱的时间复杂度是否算在插入里面","expectedSources":["K2"],"refuse":false},
+  {"id":"stack-order","knowledgeId":301,"query":"栈为什么后进先出 LIFO","expectedSources":["K3"],"refuse":false},
+  {"id":"stack-interleaving","knowledgeId":301,"query":"栈入栈出栈交错时一定是逆序吗","expectedSources":["K3"],"refuse":false},
+  {"id":"queue-order","knowledgeId":302,"query":"普通队列先进先出 FIFO 是什么意思","expectedSources":["K4"],"refuse":false},
+  {"id":"queue-priority","knowledgeId":302,"query":"优先队列与普通队列有什么区别","expectedSources":["K4"],"refuse":false},
+  {"id":"personal-plan","knowledgeId":201,"query":"结合我的错题给出复习计划","expectedSources":["K1"],"refuse":false},
+  {"id":"weather-outside-scope","knowledgeId":201,"query":"明天东京天气怎样","expectedSources":[],"refuse":true},
+  {"id":"unavailable-chapter","knowledgeId":601,"query":"折半查找如何实现","expectedSources":[],"refuse":true}
+]

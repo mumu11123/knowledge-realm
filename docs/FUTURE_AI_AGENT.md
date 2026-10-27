@@ -1,5 +1,7 @@
 # 未来 AI Agent 扩展
 
+> 阶段更新：以下保留 V0.1 的原始规划。V0.2 已实现 Spring AI、轻量 RAG、真实只读工具、授权浏览器会话、草稿生成与人工发布。现状见 [AI_ARCHITECTURE.md](AI_ARCHITECTURE.md) 与 [AI_GUIDE.md](AI_GUIDE.md)。正式账户、多用户角色体系、向量检索和更丰富内容仍是后续工作。
+
 V0.1 不引入 Spring AI、向量数据库、RAG、MCP、工具调用框架、Redis 或消息队列。
 
 ## 保留的业务边界

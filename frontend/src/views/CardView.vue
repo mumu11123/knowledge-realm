@@ -6,6 +6,7 @@ import { useResource } from '../composables/useResource'
 import { useLearning } from '../stores/learning'
 import AsyncState from '../components/AsyncState.vue'
 import Icon from '../components/Icon.vue'
+import AiTutor from '../components/AiTutor.vue'
 const route = useRoute()
 const learning = useLearning()
 const id = computed(() => Number(route.params.id))
@@ -100,6 +101,7 @@ function review() {
               : `已记录 ${unlocked.reviewCount} 次复习 · 点击后开始下一轮 24 小时提醒`
           }}
         </p>
+        <AiTutor :knowledge-id="card.knowledgeId" :name="card.name" />
         <div class="section-heading"><h2>回到故事里</h2></div>
         <RouterLink
           v-for="story in card.stories"

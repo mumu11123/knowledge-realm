@@ -1,4 +1,4 @@
-name: Validate V0.1
+name: Validate Knowledge Realm
 on: [push, pull_request]
 permissions:
   contents: read
@@ -51,7 +51,7 @@ jobs:
           npx playwright install --with-deps chromium
       - name: Start backend
         run: |
-          java -jar backend/target/realm-0.1.0.jar > /tmp/realm-backend.log 2>&1 &
+          java -jar backend/target/realm-0.2.0.jar > /tmp/realm-backend.log 2>&1 &
           ready=false
           for attempt in {1..60}; do
             if curl --fail --silent http://127.0.0.1:8080/api/subjects >/dev/null; then ready=true; break; fi

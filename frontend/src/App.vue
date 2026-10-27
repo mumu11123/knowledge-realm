@@ -1,11 +1,17 @@
 <script setup lang="ts">
-import { watch, nextTick, ref } from 'vue'
+import { watch, nextTick, ref, onMounted } from 'vue'
+import { aiApi } from './api/ai'
 import { useRoute } from 'vue-router'
 import Icon from './components/Icon.vue'
 import { useLearning } from './stores/learning'
 const route = useRoute()
 const learning = useLearning()
 const main = ref<HTMLElement>()
+onMounted(() => {
+  aiApi.session().catch(() => {
+    /* Core guest learning remains available without the AI session. */
+  })
+})
 watch(
   () => route.path,
   async () => {
@@ -27,7 +33,7 @@ const nav = [
       <RouterLink to="/" class="brand"
         ><span class="brand-icon"><Icon name="book" :size="23" /></span
         ><span>知境<small>KNOWLEDGE REALM</small></span></RouterLink
-      ><span class="version-pill">408 学习旅程 <span class="desktop-only">· V0.1</span></span>
+      ><span class="version-pill">408 学习旅程 <span class="desktop-only">· V0.2</span></span>
     </header>
     <div v-if="learning.warning" class="storage-warning" role="alert">
       {{ learning.warning }} <RouterLink to="/study">管理记录</RouterLink>

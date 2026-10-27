@@ -25,7 +25,7 @@ class ApiMySqlTest {
         mvc.perform(get("/api/subjects")).andExpect(status().isOk()).andExpect(jsonPath("$.data",hasSize(4)))
             .andExpect(jsonPath("$.data[1].availability").value("COMING_SOON"));
         mvc.perform(get("/api/subjects/1/chapters")).andExpect(status().isOk()).andExpect(jsonPath("$.data",hasSize(7)));
-        assertThat(jdbc.queryForObject("SELECT COUNT(*) FROM flyway_schema_history WHERE success=1",Integer.class)).isEqualTo(3);
+        assertThat(jdbc.queryForObject("SELECT COUNT(*) FROM flyway_schema_history WHERE success=1",Integer.class)).isEqualTo(5);
         assertThat(jdbc.queryForObject("SELECT COUNT(*) FROM knowledge_point",Integer.class)).isGreaterThan(25);
         assertThat(jdbc.queryForObject("SELECT COUNT(*) FROM story",Integer.class)).isEqualTo(3);
     }

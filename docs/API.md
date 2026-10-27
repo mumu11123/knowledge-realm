@@ -1,5 +1,7 @@
 # HTTP API
 
+V0.2 新增 AI 与管理员 API，详见 [AI_GUIDE.md](AI_GUIDE.md)。原目录/判分接口保持响应兼容；存在有效的授权浏览器会话时，提交答案会额外记录当前会话的真实答题结果。
+
 开发地址：http://127.0.0.1:8080 。Swagger UI：`/swagger-ui.html`，OpenAPI：`/v3/api-docs`。生产 profile 默认关闭文档。
 
 成功：`{"code":"OK","message":"成功","data":...}`。

@@ -1,7 +1,7 @@
 {
   "name": "knowledge-realm-frontend",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "engines": {
     "node": ">=22.12.0"
@@ -12,6 +12,7 @@
     "preview": "vite preview --host 127.0.0.1",
     "test": "vitest run",
     "test:e2e": "playwright test",
+    "test:live-ai": "node scripts/live-ai.mjs",
     "format": "prettier --write src tests scripts *.ts *.json index.html",
     "format:check": "prettier --check src tests scripts *.ts *.json index.html"
   },

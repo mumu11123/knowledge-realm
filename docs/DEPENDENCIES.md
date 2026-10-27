@@ -1,5 +1,7 @@
 # 依赖与兼容性
 
+V0.2 新增 Spring AI 1.1.8（通过 BOM 管理）与 Spring Boot Actuator；继续使用 Java 21 编译目标、Boot 3.5.16、现有 MySQL 和前端依赖。模型提供商为 DeepSeek，不需要额外 embedding SDK。兼容依据与运行配置见 [AI_GUIDE.md](AI_GUIDE.md)。
+
 2026-10-27 检查，使用稳定发布版本，npm 安装生成锁文件，不包含 preview / beta / experimental 依赖。
 
 | 层 | 版本 |

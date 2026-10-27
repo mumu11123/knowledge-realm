@@ -23,3 +23,20 @@ mybatis:
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
+realm:
+  ai:
+    enabled: ${AI_ENABLED:false}
+    api-key: ${AI_API_KEY:}
+    base-url: ${AI_BASE_URL:https://api.deepseek.com}
+    model: ${AI_MODEL:deepseek-flash}
+    timeout-seconds: ${AI_TIMEOUT_SECONDS:45}
+    admin-token: ${AI_ADMIN_TOKEN:}
+    cookie-secure: ${AI_COOKIE_SECURE:false}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never

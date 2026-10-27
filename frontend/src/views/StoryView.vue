@@ -79,7 +79,11 @@ function showSummary() {
     ><AsyncState :loading="loading" :error="error" @retry="reload" />
     <template v-if="story"
       ><div class="story-meta">
-        <span class="badge violet">演示故事 · 待审核</span
+        <span class="badge violet">{{
+          story.resourceStatus === 'PUBLISHED' && story.reviewStatus === 'REVIEWED'
+            ? '已人工审核故事'
+            : '演示故事 · 待审核'
+        }}</span
         ><span class="muted small"
           >{{ progress }} / 4 ·
           {{ ['', '进入场景', '理解选择', '知识总结', '完成旅程'][progress] }}</span

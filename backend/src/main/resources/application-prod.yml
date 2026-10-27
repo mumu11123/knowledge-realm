@@ -10,3 +10,6 @@ spring:
     password: ${DB_PASSWORD}
 server:
   shutdown: graceful
+realm:
+  ai:
+    cookie-secure: true
